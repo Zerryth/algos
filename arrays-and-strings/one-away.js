@@ -20,7 +20,7 @@ function areOneOrLessAway(str1, str2) {
 
     const { dictWithMoreKeys, otherDict } = identifyDictWithMoreKeys(charCounts1, charCounts2);
 
-    return hasFewerThanTwoDifferences(dictWithMoreKeys, otherDict);
+    return haveFewerThanTwoDifferencesTotal(dictWithMoreKeys, otherDict);
 }
 
 function getCharCounts(str) {
@@ -57,7 +57,7 @@ function identifyDictWithMoreKeys(obj1, obj2) {
     return { dictWithMoreKeys: dictWithMoreKeys, otherDict: otherDict }
 }
 
-function hasFewerThanTwoDifferences(obj1, obj2) {
+function haveFewerThanTwoDifferencesTotal(obj1, obj2) {
     let differences = 0;
     for (let key in obj1) {
         if (obj1[key] !== obj2[key]) {
