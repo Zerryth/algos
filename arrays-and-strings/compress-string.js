@@ -1,6 +1,7 @@
 /**
  * Given a string, return a "compressed string".
  * The compressed string should have counts of each characters.
+ * 
  * However, if the original string is shorter than the compressed string,
  * then return the original string.
  * 
@@ -27,6 +28,7 @@ function compressString(str) {
             } else {
                 compressedStr += countingChar + count + currentChar + '1';
             }
+            
             return compressedStr.length < originalStringLength ? compressedStr : str;
         }
 
