@@ -28,7 +28,7 @@ function compressString(str) {
             } else {
                 compressedStr += countingChar + count + currentChar + '1';
             }
-            
+
             return compressedStr.length < originalStringLength ? compressedStr : str;
         }
 
