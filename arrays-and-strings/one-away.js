@@ -64,7 +64,7 @@ function hasFewerThanTwoDifferences(obj1, obj2) {
             differences++;
         }
 
-        if (differences > 1) {
+        if (differences >= 2) {
             return false;
         }
     }
