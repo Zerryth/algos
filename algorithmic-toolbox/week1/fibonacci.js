@@ -1,3 +1,4 @@
+// O(n)
 function fibonacci(n) {
     if (n <= 1) {
         return n;
@@ -9,7 +10,7 @@ function fibonacci(n) {
     }
 
     console.log(`n ${n} => ${fibSequence[n]}`);
-    return fibSequence[n];
+    return n;
 }
 
 // if less than 2: O(n)
@@ -26,4 +27,4 @@ const fibSequence = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34];
 //                   0  1  2  3  4  5  6   7   8   9
 
 // console.log(fibonacciSlow(8));
-console.log(fibonacci(2));
+console.log(fibonacci(9));
