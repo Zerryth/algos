@@ -15,9 +15,7 @@ def get_change(money):
 
         remainder = money % denomination
         
-        money_divided = (money / denomination)
-        denomination_decimal = (remainder)/denomination
-        coins = int(round(money_divided - denomination_decimal))
+        coins = int(round((money / denomination) - (remainder)/denomination))
         coin_count += coins
         money -= coins * denomination
         
