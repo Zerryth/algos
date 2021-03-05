@@ -1,6 +1,42 @@
 # python3
 import sys
+'''
+- Compute the minimum number of gas tank refills to get the car from one city to another.
+- Car starts with full tank (does not count towards number of refills).
 
+Input:
+    - int: d distance between 2 cities
+    - int: m gas tank capacity
+    - int: n number of stops
+    - list<int>: [stop1, stop2, ..., stopn]
+
+Output: (int) minimum number of refills/refeuls needed to get from one city to the other
+
+Constrains: 1 <= d <= 10**5, 1 <= m <= 400, 1 <= n <= 300, 0 < stop1 < stop2 < ... < stopn < d
+
+Samples:
+    Input:
+        950
+        400
+        4
+        200 375 550 750
+    Output: 2
+
+    Input:
+        10
+        3
+        4
+        1 2 5 9
+    Output: -1 (cannot reach gas station at going from 5 --> 9)
+
+    Input:
+        200
+        250
+        2
+        100 150
+    
+    Output: 0 (no refills needed)
+'''
 class Car:
     def __init__(self, distance, tank, stops):
         self.total_distance_to_city = distance
