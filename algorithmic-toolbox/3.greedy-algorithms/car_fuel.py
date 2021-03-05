@@ -1,122 +1,113 @@
 # python3
 import sys
 
-
-# def compute_min_refills(distance, tank, stops):
-
-#     return -1
-
-# if __name__ == '__main__':
-#     test_input = ['950', '400', '4', '200', '375', '550', '750']
-#     d, m, _, *stops = map(int, test_input)
-#     # d, m, _, *stops = map(int, sys.stdin.read().split())
-#     print(compute_min_refills(d, m, stops))
-
-def can_get_to_next_location_without_refill(fuel_remaining, d, stops, current_location, next_location):
-    # 1st time around current_location should be 0
-    # ['200'] (length = 1)
-    # ['200', '375', '550', '750']
-    #    0     1       2      3
-    #                       curr
-    #                       next_loc
-    #                p_next
-
-    # m=25
-
-    distance_to_next_stop = 0
-    distance_to_city = d - stops[current_location] # 950 - 
-    potential_next_stop = next_location if next_location != current_location else current_location + 1 # p_next = 2
-
-    if (distance_to_city <= fuel_remaining):
-        # We can get to the city without any additional stops,
-        # so we'll set potential_next stop value to -1
-        return (True, distance_to_city, -1)
-
-    if (potential_next_stop >= len(stops) and distance_to_city > fuel_remaining):
-        # there are no remaining stops, nor can we reach the city
-        return (False, distance_to_next_stop, potential_next_stop) # it might be breaking here?
+class Car:
+    def __init__(self, distance, tank, stops):
+        self.total_distance_to_city = distance
+        self.full_tank = tank
+        self.fuel_remaining = tank
+        self.stops = stops
+        self.refills_count = 0
+        self.current_location = -1
     
-    # dist_to_next_stop = 550 - 375 => 175
-    distance_to_next_stop = stops[potential_next_stop] - stops[current_location]
+    def calculate_min_refuels(self):
+        if (self.fuel_remaining > self.total_distance_to_city):
+            return self.refills_count
+        
+        while(True):
+            if (self.can_get_to_city()):
+                return self.refills_count
+            
+            if (not self.is_valid_stop(self.current_location + 1)):
+                return -1
+            
+            if (self.can_get_to_next_stop()):
+                self.drive()
+            else:
+                self.refuel()
 
-    if (distance_to_next_stop > fuel_remaining):
-        # 175 > 25
-        # False, 2, 2
-        return (False, distance_to_next_stop, potential_next_stop) # maybe return something else for dist to next and potential next for this case, since we can't get to next stop?
+                if (self.can_get_to_city()):
+                    return self.refills_count
 
-    return (True, distance_to_next_stop, potential_next_stop)
-
-def compute_min_refills(distance, tank, stops):
-    refills_count = 0
-
-    if (tank > distance):
-        return refills_count
-    
-    if (len(stops) == 0):
-        return -1
-    
-    current_location = -1
-    fuel_remaining = tank
-    next_location = 0
-    
-
-    # ['200', '375', '550', '750']
-    #    0     1       2      3
-    #                        curr 
-    #                        next                           
-    #   m=400
-    # refills= 1
-
-    while(distance): # hmm, this is always 950...is this the right condition?
-        current_distance = stops[current_location] if current_location != -1 else -1
-        next_location = current_location + 1 if current_location + 1 < len(stops) else -1 # it's -1 at the end
-
-        if (next_location == -1):
-            if (distance - current_distance > fuel_remaining):
+                if (self.can_get_to_next_stop()):
+                    self.drive()
+                    continue
+                
                 return -1
 
-            return refills_count
+        # return -1
+    
+    def can_get_to_city(self):
+        current_location = 0 if self.is_at_starting_city() else self.stops[self.current_location]
+        distance = self.total_distance_to_city - current_location
         
-        # next_distance = 550 - 375 => 175
-        next_distance = stops[next_location] - current_distance if current_distance != -1 else stops[next_location]
+        if (distance <= self.fuel_remaining):
+            return True
 
-        if (tank < next_distance):
-            return -1
+        if (distance <= self.full_tank):
+            self.refuel()
+            return True
         
-        current_location = next_location # next_location = current_location + 1 after this??
-        fuel_remaining -= next_distance
+        return False
+    
+    def can_get_to_next_stop(self):
+        dist = self.get_distance_to_next_stop()
+        return self.get_distance_to_next_stop() <= self.fuel_remaining
+    
+    def drive(self):
+        dist = self.get_distance_to_next_stop()
+        self.fuel_remaining -= self.get_distance_to_next_stop()
+        self.current_location += 1
+    
+    def refuel(self):
+        self.fuel_remaining = self.full_tank
+        self.refills_count += 1
+        
+    def is_at_starting_city(self):
+        return self.current_location == -1
+    
+    def is_valid_stop(self, stop):
+        return stop < len(self.stops)
+    
+    def get_distance_to_next_stop(self):
+        current_distance = stops[self.current_location] if self.current_location != -1 else 0
+        next_location = self.current_location + 1
 
-        can_drive_to_next, distance_to_next_location, next_loc = can_get_to_next_location_without_refill(fuel_remaining, distance, stops, current_location, next_location)
-        while(can_drive_to_next):
-            current_location = next_loc
-            next_location += (next_loc + 1) # should change to curr + 1 ?
-            fuel_remaining -= distance_to_next_location
-            
-            # fuel_remaining = 25, current_location = 1, next_location = 2
-            next_location_data = can_get_to_next_location_without_refill(fuel_remaining, distance, stops, current_location, next_location) 
-            # next_location_data => (False, 2, 2)
-            # (True, <distance_to_city>, -1)
-            # (True, <distance_to_next_stop>, )
-            can_drive_to_next = next_location_data[0]
-            if (can_drive_to_next):
-                can_drive_to_city = next_location_data[2] == -1
-                if (can_drive_to_city):
-                    return refills_count
-                
-                next_location = next_location_data[2]
+        if (next_location >= len(stops)):
+            return False
 
-        refills_count += 1
-        fuel_remaining = tank
+        return stops[next_location] - current_distance
 
-    return -1
 
 if __name__ == '__main__':
     # test_input = [d, tank, stops, stop1, stop2, stop3, stop4]
-    # test_input = ['950', '400', '4', '200', '375', '550', '750']
-    # test_input = ['10', '3', '4', '1', '2', '5', '9']
-    # test_input = ['200', '250', '2', '100', '150']
+    # test_input = ['950', '400', '4', '200', '375', '550', '750'] # 2
+    # test_input = ['10', '3', '4', '1', '2', '5', '9'] # -1
+    # test_input = ['10', '3', '2', '5', '9'] # -1
+    test_input = ['200', '250', '2', '100', '150'] # 0
     # test_input = ['500', '200', '4', '100', '200', '300', '400']
     # test_input = ['700', '200', '4', '100', '200', '300', '400']
+    # test_input = ['10', '3', '4', '1', '2', '5', '9'] # -1
+    # test_input = ['200', '250', '2', '100', '150'] # 0
+    # test_input = ['1200', '400', '4', '200', '375', '550', '750'] # -1
+    # test_input = ['1150', '400', '4', '200', '375', '550', '750'] # 2
+    # test_input = ['0', '400', '0'] # 2
+    # test_input = ['400', '250', '2', '100', '150'] # 1
+    # test_input = ['400', '250', '2', '100', '150'] #output 1
+    # test_input = [1000, 200, '100', '200', '7', '250', '300', '400', '600', '780'] #-1
+    # test_input = ['1000', '200', '8', '100', '200', '250', '300', '400', '600', '780', '820'] #5
+# compute_min_refills(1000, 200, [100, 200,250, 300, 400, 600,820]) #-1
+# compute_min_refills(1000, 200, [100, 200,250, 300, 400, 600,800]) #4
+# compute_min_refills(10,3, [1,2,5,9]) #-1
+# compute_min_refills(200,250,[100,150]) #0
+# compute_min_refills(1200, 400, [200, 375, 550, 750]) #-1
+# compute_min_refills(1150, 400, [200, 375, 550, 750]) #2
+# compute_min_refills(200, 250, [100, 150]) #0
+# compute_min_refills( 10, 3, [1, 2, 5, 9]) #-1
+    # test_input = ['750', '400', '3', '200', '375', '550'] # 2
+    # (10,3, [1,2,5,9])
     d, m, _, *stops = map(int, sys.stdin.read().split())
     # d, m, _, *stops = map(int, test_input)
-    print(compute_min_refills(d, m, stops))
+    mycar = Car(d, m, stops)
+    print(mycar.calculate_min_refuels(d, m, stops))
+    # print(compute_min_refills(d, m, stops))
