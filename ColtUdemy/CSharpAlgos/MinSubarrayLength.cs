@@ -37,7 +37,7 @@ namespace CSharpAlgos
                 {
                     // shrink the window
                     // then slide window to the right (start moves up)
-                    minLen = GetMin(minLen, end - start);
+                    minLen = Program.GetMin(minLen, end - start);
                     total -= nums[start];
                     start++;
                 }
@@ -54,15 +54,5 @@ namespace CSharpAlgos
         private static bool IsAtLeastTargetSum(int total, int targetMinimalSum) => total >= targetMinimalSum;
 
         private static bool HasNotReachedTheEnd(int pointer, int endIndex) => pointer < endIndex;
-
-        private static double GetMin(double a, double b)
-        {
-            if (b < a)
-            {
-                return b;
-            }
-
-            return a;
-        }
     }
 }

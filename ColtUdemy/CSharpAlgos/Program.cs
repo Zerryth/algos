@@ -6,13 +6,27 @@ namespace CSharpAlgos
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(MinSubarrayLength.MinSubArrLen(new int[] { 2, 3, 1, 2, 4, 3 }, 7));
+
         }
 
-        public static int[] SumZero2()
+        internal static double GetMin(double a, double b)
         {
-            Console.WriteLine("Program SumZero");
-            return new int[0];
+            if (b < a)
+            {
+                return b;
+            }
+
+            return a;
+        }
+
+        internal static int GetMax(int a, int b)
+        {
+            if (b > a)
+            {
+                return b;
+            }
+
+            return a;
         }
     }
 }
