@@ -11,13 +11,13 @@ namespace CSharpAlgos
         {
             var sll = new SinglyLinkedList();
             sll.Push("RED");
-            // sll.Push("ORANGE");
-            // sll.Push("YELLOW");
-            // sll.Push("GREEN");
-            var popped = sll.Pop();
+            sll.Push("ORANGE");
+            sll.Push("YELLOW");
+            sll.Push("GREEN");
+            sll.Push("BLUE");
+            var fetchedNode = sll.Remove(4);
             Console.WriteLine($"SLL length: {sll.Length}");
-            // Console.WriteLine($"SLL tail: {sll.Tail.Value}, SLL length: {sll.Length}");
-            Console.WriteLine($"Popped tail: {popped.Value}");
+            Console.WriteLine($"head: {fetchedNode.Value}");
         }
 
         internal static double GetMin(double a, double b)

@@ -43,14 +43,118 @@ namespace CSharpAlgos
 
             var poppedTail = Tail;
             var penultimate = FindPenultimate();
-            Tail = penultimate;
+            if (this.Length == 1)
+            {
+                Head = null;
+                Tail = null;
+            }
+            else
+            {
+                Tail = penultimate;
+            }
             penultimate.Next = null;
             Length--;
 
             return poppedTail;
         }
 
-        public Node FindPenultimate()
+        public Node Shift()
+        {
+            if (this.Length == 0) return null;
+
+            var oldHead = Head;
+            Head = oldHead.Next;
+            Length--;
+
+            return oldHead;
+        }
+
+        public SinglyLinkedList Unshift(object val)
+        {
+            var newNode = new Node(val);
+            AssignNodeToHead(newNode);
+            Length++;
+
+            return this;
+        }
+
+        public Node GetNode(int index)
+        {
+            if (index < 0 || index >= Length)
+            {
+                return null;
+            }
+
+            if (index == 0)
+            {
+                return Head;
+            }
+            var current = Head;
+            var count = 0;
+            while (!(index == count))
+            {
+                current = current.Next;
+                count++;
+            }
+
+            return current;
+        }
+
+        public bool SetNode(int index, object val)
+        {
+            var node = GetNode(index);
+            if (node != null)
+            {
+                node.Value = val;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Insert(int index, object val)
+        {
+            if (index < 0 || index > Length) return false;
+
+            if (index == 0)
+            {
+                Unshift(val);
+                return true;
+            }
+
+            if (index == Length)
+            {
+                Push(val);
+                return true;
+            }
+
+            var previousNode = GetNode(index - 1);
+            var nodeInCurrentTargetIndex = GetNode(index);
+            var newNode = new Node(val);
+
+            newNode.Next = nodeInCurrentTargetIndex;
+            previousNode.Next = newNode;
+            Length++;
+
+            return true;
+        }
+
+        public Node Remove(int index)
+        {
+            if (index < 0 || index >= Length) return null;
+            if (index == 0) return Shift();
+            if (index == Length - 1) return Pop();
+
+            var previousNode = GetNode(index - 1);
+            var removedNode = GetNode(index);
+            previousNode.Next = removedNode.Next;
+            removedNode.Next = null;
+            Length--;
+
+            return removedNode;
+        }
+
+        private Node FindPenultimate()
         {
             if (this.Length == 0) return null;
 
@@ -63,5 +167,20 @@ namespace CSharpAlgos
 
             return current;
         }
+
+        private void AssignNodeToHead(Node node)
+        {
+            if (Head == null)
+            {
+                Head = node;
+                Tail = node;
+            }
+            else
+            {
+                node.Next = Head;
+                Head = node;
+            }
+        }
+
     }
 }
