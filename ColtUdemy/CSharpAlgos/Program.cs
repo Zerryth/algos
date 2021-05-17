@@ -9,8 +9,15 @@ namespace CSharpAlgos
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(RecursionIntro.RecursiveReverse("hel"));
-            // Console.WriteLine("ube".Take(0).ToString());
+            var sll = new SinglyLinkedList();
+            sll.Push("RED");
+            // sll.Push("ORANGE");
+            // sll.Push("YELLOW");
+            // sll.Push("GREEN");
+            var popped = sll.Pop();
+            Console.WriteLine($"SLL length: {sll.Length}");
+            // Console.WriteLine($"SLL tail: {sll.Tail.Value}, SLL length: {sll.Length}");
+            Console.WriteLine($"Popped tail: {popped.Value}");
         }
 
         internal static double GetMin(double a, double b)
