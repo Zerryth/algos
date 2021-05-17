@@ -154,6 +154,24 @@ namespace CSharpAlgos
             return removedNode;
         }
 
+        public SinglyLinkedList Reverse()
+        {
+            var node = Head;
+            Head = Tail;
+            Tail = node;
+            Node previous = null;
+            Node next = null;
+            for (var i = 0; i < Length; i++)
+            {
+                next = node.Next;
+                node.Next = previous;
+                previous = node;
+                node = next;
+            }
+
+            return this;
+        }
+
         private Node FindPenultimate()
         {
             if (this.Length == 0) return null;
