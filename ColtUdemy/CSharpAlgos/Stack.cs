@@ -35,9 +35,20 @@ namespace CSharpAlgos
             return ++Size;
         }
 
-        public void Pop()
+        // last RED first 
+        // 
+        // 
+        public object Pop()
         {
+            if (First == null) return null;
 
+            var poppedNode = First;
+            if (First == Last) Last = null;
+
+            First = First.Next;
+            Size--;
+
+            return poppedNode.Value;
         }
     }
 }

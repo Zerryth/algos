@@ -26,8 +26,15 @@ namespace CSharpAlgos
             var stack = new Stack();
             var firstPush = stack.Push("RED");
             var secondPush = stack.Push("ORANGE");
+            var thirdPush = stack.Push("YELLOW");
+
+            var firstPop = stack.Pop();
+            var secondPop = stack.Pop();
+            var thirdPop = stack.Pop();
+            var fourthPop = stack.Pop();
 
             Console.WriteLine($"firstPush {firstPush}, secondPush {secondPush}");
+            Console.WriteLine($"firstPop: {firstPop}, secondPop {secondPop}, thirdPop {thirdPop}, fourthPop {fourthPop}");
         }
 
         internal static double GetMin(double a, double b)
