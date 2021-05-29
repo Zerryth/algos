@@ -10,10 +10,7 @@ namespace CSharpAlgos
     {
         static void Main(string[] args)
         {
-            var time = "07:45:00PM";
-            var timeConverter = new TimeConversion();
-            var militaryTime = timeConverter.ToMilitaryTime(time);
-            Console.WriteLine(militaryTime);
+            Console.WriteLine(RecursionIntro.BigFactorial(37));
         }
 
         private static bool IsPM(string time) => time.IndexOf("P") != -1;

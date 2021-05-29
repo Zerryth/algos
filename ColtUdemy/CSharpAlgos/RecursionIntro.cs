@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace CSharpAlgos
@@ -20,6 +21,13 @@ namespace CSharpAlgos
             }
 
             return num * Factorial(num - 1);
+        }
+
+        public static BigInteger BigFactorial(int num)
+        {
+            if (num <= 1) return 1;
+
+            return num * BigFactorial(num - 1);
         }
 
         // 2**3 => 2 * 2**2 => 2 * (2 * 2*1)
