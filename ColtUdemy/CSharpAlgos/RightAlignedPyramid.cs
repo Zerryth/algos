@@ -5,6 +5,12 @@ using System.Text;
 
 namespace CSharpAlgos
 {
+    /// Prints a pyramid
+    /// Example. pyramid of size n = 4:
+    ///    #
+    ///   ##
+    ///  ###
+    /// ####
     public class RightAlignedPyramid
     {
         public RightAlignedPyramid(int n)
