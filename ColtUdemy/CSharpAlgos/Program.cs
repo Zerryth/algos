@@ -10,14 +10,14 @@ namespace CSharpAlgos
     {
         static void Main(string[] args)
         {
-            var matrix = new List<List<int>>()
-            {
-                new List<int>() { 11, 2, 4 },
-                new List<int>() { 4, 5, 6 },
-                new List<int>() { 10, 8, -12 },
-            };
-            var res = HackerRankWarmup.DiagonalDifference(matrix);
-            Console.WriteLine(res);
+
+            // var res = 1000.500000;
+            // Console.WriteLine($"{res:0000.000000}");
+            var numRatios = new NumberRatios(new List<int>() { -4, 3, -9, 0, 4, 1 });
+            numRatios.PrintRatios();
+            // Console.WriteLine(
+            //     ((float)3 / 6)
+            // );
         }
 
         internal static double GetMin(double a, double b)
