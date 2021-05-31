@@ -98,16 +98,46 @@ namespace CSharpAlgos
         public List<BSTNode> DFSPreOrder()
         {
             var data = new List<BSTNode>();
-            Traverse(Root, data);
+            TraversePreOrder(Root, data);
 
             return data;
         }
 
-        private void Traverse(BSTNode node, List<BSTNode> data)
+        public List<BSTNode> DFSPostOrder()
+        {
+            var data = new List<BSTNode>();
+            TraversePostOrder(Root, data);
+
+            return data;
+        }
+
+        public List<BSTNode> DFSInOrder()
+        {
+            var data = new List<BSTNode>();
+            TraverseInOrder(Root, data);
+
+            return data;
+        }
+
+        private void TraversePreOrder(BSTNode node, List<BSTNode> data)
         {
             data.Add(node);
-            if (node.Left != null) Traverse(node.Left, data);
-            if (node.Right != null) Traverse(node.Right, data);
+            if (node.Left != null) TraversePreOrder(node.Left, data);
+            if (node.Right != null) TraversePreOrder(node.Right, data);
+        }
+
+        private void TraversePostOrder(BSTNode node, List<BSTNode> data)
+        {
+            if (node.Left != null) TraversePostOrder(node.Left, data);
+            if (node.Right != null) TraversePostOrder(node.Right, data);
+            data.Add(node);
+        }
+
+        private void TraverseInOrder(BSTNode node, List<BSTNode> data)
+        {
+            if (node.Left != null) TraverseInOrder(node.Left, data);
+            data.Add(node);
+            if (node.Right != null) TraverseInOrder(node.Right, data);
         }
     }
 }
@@ -121,3 +151,5 @@ namespace CSharpAlgos
 // tree.Insert(20);
 // var res = tree.DFSPreOrder();
 // Console.WriteLine(tree);
+// expected output for PreOrder [10, 6, 3, 8, 15, 20]
+// expected output for PreOrder [3, 8, 6, 20, 15, 10]

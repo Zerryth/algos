@@ -10,10 +10,22 @@ namespace CSharpAlgos
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(RecursionIntro.BigFactorial(37));
+            var priorityQueue = new PriorityQueue(
+                new List<PriorityNode>()
+                {
+                    new PriorityNode("sun", 1),
+                    new PriorityNode("moon", 3),
+                    new PriorityNode("stars", 4),
+                    new PriorityNode("pluto", 7),
+                    new PriorityNode("rainbow", 38),
+                    new PriorityNode("whale", 30),
+                }
+            );
+            priorityQueue.Enqueue("super hero", 0);
+            var enq = priorityQueue.Enqueue("2dlez", 2);
+            // Console.WriteLine($"top: {priorityQueue.Values[0].Value}");
+            Console.WriteLine($"enqueued at idx: {enq}");
         }
-
-        private static bool IsPM(string time) => time.IndexOf("P") != -1;
 
         internal static double GetMin(double a, double b)
         {
